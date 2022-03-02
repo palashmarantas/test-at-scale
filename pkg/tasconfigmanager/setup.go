@@ -73,13 +73,14 @@ func (tc *tasConfigManager) LoadConfig(ctx context.Context,
 	}
 
 	tasConfig := &core.TASConfig{SmartRun: true, Tier: core.Small}
-
+	fmt.Printf("yaml file : %+v\n", yamlFile)
 	err = yaml.Unmarshal(yamlFile, tasConfig)
 	if err != nil {
 		tc.logger.Errorf("Error while unmarshalling yaml file, path %s, error %v", path, err)
 		return nil, errs.New("Invalid format of configuration file")
 	}
 
+	fmt.Printf("config :%+v", tasConfig)
 	validateErr := tc.validate.Struct(tasConfig)
 	if validateErr != nil {
 		// translate all error at once
